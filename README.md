@@ -2,10 +2,14 @@
 
 Simple app to showcase the use of TypeScript, React, Redux, RESTful APIs, Docker, Auth0 and CI/CD.
 
+## Production build
+
+https://caipirinha.vercel.app/
+
 ## To-do
 
-- [ ] Deploy and sync with main branch.
-- [ ] Add GitHub Actions to run linter checks.
+- [x] Deploy and sync with main branch.
+- [x] Add GitHub Actions to run linter checks.
 - [ ] Install dependencies (React Router, Axios, TailwindCSS, etc)
 - [ ] Implement Redux to manage state.
 - [ ] Scaffold basic UI with data from TheCocktailDB API.
