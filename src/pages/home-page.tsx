@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from '../app/hooks';
 import {
   fetchCocktails,
   selectCocktails,
+  selectCocktailsStatus,
 } from '../features/cocktails/cocktails-slice';
 import { Link } from 'react-router-dom';
 import { Input } from 'react-daisyui';
@@ -10,10 +11,11 @@ import { Input } from 'react-daisyui';
 export default function HomePage() {
   const dispatch = useAppDispatch();
   const cocktails = useAppSelector(selectCocktails);
+  const status = useAppSelector(selectCocktailsStatus);
 
   useEffect(() => {
-    dispatch(fetchCocktails());
-  }, [dispatch]);
+    if (status === 'idle') dispatch(fetchCocktails());
+  }, [dispatch, status]);
 
   return (
     <>
@@ -42,25 +44,31 @@ export default function HomePage() {
             />
           </div>
         </div>
-        <ul className='grid grid-cols-2 items-center'>
-          {cocktails.map((cocktail) => (
-            <li key={cocktail.id}>
-              <Link to={`/cocktails/${cocktail.id}`}>
-                <div className='relative'>
-                  <img
-                    src={cocktail.image}
-                    alt={cocktail.name}
-                    className='w-full h-auto'
-                  />
-                  <div className='absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-90'></div>
-                  <div className='absolute bottom-0 left-0 right-0 p-4 text-white z-10'>
-                    <p>{cocktail.name}</p>
+        {status === 'loading' || (status === 'idle' && <p>Loading...</p>)}
+
+        {status === 'failed' && <p>Failed to load cocktails</p>}
+
+        {status === 'succeeded' && (
+          <ul className='grid grid-cols-2 items-center'>
+            {cocktails.map((cocktail) => (
+              <li key={cocktail.id}>
+                <Link to={`/cocktails/${cocktail.id}`}>
+                  <div className='relative'>
+                    <img
+                      src={cocktail.image}
+                      alt={cocktail.name}
+                      className='w-full h-auto'
+                    />
+                    <div className='absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-90'></div>
+                    <div className='absolute bottom-0 left-0 right-0 p-4 text-white z-10'>
+                      <p>{cocktail.name}</p>
+                    </div>
                   </div>
-                </div>
-              </Link>
-            </li>
-          ))}
-        </ul>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </>
   );
