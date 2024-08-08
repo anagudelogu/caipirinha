@@ -1,13 +1,16 @@
 import { Outlet } from 'react-router-dom';
-import { Button } from 'react-daisyui';
+import Navbar from './app/components/MainNavbar';
+import { ScrollRestoration } from 'react-router-dom';
 
 function App() {
   return (
-    <div>
-      <h1 className='text-3xl font-bold underline'>Hello Caipirinha</h1>
-      <Button color='primary'>Click me!</Button>
-      <Outlet />
-    </div>
+    <>
+      <Navbar />
+      <main className='max-w-5xl mx-auto'>
+        <Outlet />
+      </main>
+      <ScrollRestoration />
+    </>
   );
 }
 

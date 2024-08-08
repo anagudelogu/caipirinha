@@ -5,15 +5,20 @@ import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { store } from './app/store.ts';
 import { Provider } from 'react-redux';
+import HomePage from './pages/home-page.tsx';
+import CocktailDetails from './pages/cocktail-details.tsx';
 
 const router = createBrowserRouter([
   {
-    path: '/',
     element: <App />,
     children: [
       {
-        path: 'about',
-        element: <div>About page</div>,
+        path: '/',
+        element: <HomePage />,
+      },
+      {
+        path: '/cocktails/:id',
+        element: <CocktailDetails />,
       },
     ],
   },
