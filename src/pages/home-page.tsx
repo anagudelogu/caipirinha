@@ -27,7 +27,7 @@ export default function HomePage() {
 
   return (
     <>
-      <div className='bg-base-100 text-white text-center py-8'>
+      <div className='bg-base-100 text-base-content text-center py-8'>
         <h2 className='text-3xl font-bold md:text-4xl lg:text-5xl'>
           Welcome to Caipirinha
         </h2>
@@ -46,7 +46,7 @@ export default function HomePage() {
 
       <div>
         <div className='flex items-center px-4 gap-2 mb-4 lg:mb-8'>
-          <h3 className='text-2xl font-bold text-white flex items-center gap-1 flex-1 w-full md:text-3xl'>
+          <h3 className='text-2xl font-bold text-base-content flex items-center gap-1 flex-1 w-full md:text-3xl'>
             Cocktails
           </h3>
           <div className='flex-1 w-full'>

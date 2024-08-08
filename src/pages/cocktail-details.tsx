@@ -52,7 +52,7 @@ export default function CocktailDetails() {
               <Badge color='primary'>
                 {cocktail.alcoholic ? 'Alcoholic' : 'Non Alcoholic'}
               </Badge>
-              <h3 className='text-xl text-white font-semibold lg:text-2xl'>
+              <h3 className='text-xl text-base-content font-semibold lg:text-2xl'>
                 Ingredients
               </h3>
               <ul className='list-disc list-inside text-lg'>
@@ -63,7 +63,7 @@ export default function CocktailDetails() {
             </div>
 
             <div className='flex flex-col gap-2 mt-6 flex-1 md:col-span-2 md:mt-0'>
-              <h3 className='text-xl text-white font-semibold lg:text-2xl'>
+              <h3 className='text-xl text-base-content font-semibold lg:text-2xl'>
                 Instructions
               </h3>
               <p className='text-lg'>{cocktail.instructions}</p>
