@@ -19,10 +19,12 @@ export default function HomePage() {
 
   return (
     <>
-      <header className='bg-base-100 text-white text-center py-8'>
-        <h2 className='text-3xl font-bold'>Welcome to Caipirinha</h2>
+      <div className='bg-base-100 text-white text-center py-8'>
+        <h2 className='text-3xl font-bold md:text-4xl lg:text-5xl'>
+          Welcome to Caipirinha
+        </h2>
         <p className='text-lg'>Please sign in to save your favorite drinks!</p>
-      </header>
+      </div>
 
       {/* Only show if user is logged in */}
       <div>
@@ -32,8 +34,8 @@ export default function HomePage() {
       </div>
 
       <div>
-        <div className='flex items-center px-4 gap-2 mb-4'>
-          <h3 className='text-2xl font-bold text-white flex items-center gap-1 flex-1 w-full'>
+        <div className='flex items-center px-4 gap-2 mb-4 lg:mb-8'>
+          <h3 className='text-2xl font-bold text-white flex items-center gap-1 flex-1 w-full md:text-3xl'>
             Cocktails
           </h3>
           <div className='flex-1 w-full'>
@@ -49,7 +51,7 @@ export default function HomePage() {
         {status === 'failed' && <p>Failed to load cocktails</p>}
 
         {status === 'succeeded' && (
-          <ul className='grid grid-cols-2 items-center'>
+          <ul className='grid grid-cols-2 items-center md:grid-cols-4 lg:grid-cols-5'>
             {cocktails.map((cocktail) => (
               <li key={cocktail.id}>
                 <Link to={`/cocktails/${cocktail.id}`}>
@@ -60,7 +62,7 @@ export default function HomePage() {
                       className='w-full h-auto'
                     />
                     <div className='absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-90'></div>
-                    <div className='absolute bottom-0 left-0 right-0 p-4 text-white z-10'>
+                    <div className='absolute bottom-0 left-0 right-0 p-4 text-white z-10 lg:text-lg'>
                       <p>{cocktail.name}</p>
                     </div>
                   </div>

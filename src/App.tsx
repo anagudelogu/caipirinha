@@ -6,7 +6,9 @@ function App() {
   return (
     <>
       <Navbar />
-      <Outlet />
+      <main className='max-w-5xl mx-auto'>
+        <Outlet />
+      </main>
       <ScrollRestoration />
     </>
   );
