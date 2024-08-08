@@ -6,12 +6,18 @@ import {
   selectCocktailsStatus,
 } from '../features/cocktails/cocktails-slice';
 import { Link } from 'react-router-dom';
-import { Input } from 'react-daisyui';
+import Search from '../features/search/Search';
+import { selectQuery } from '../features/search/search-slice';
 
 export default function HomePage() {
   const dispatch = useAppDispatch();
   const cocktails = useAppSelector(selectCocktails);
   const status = useAppSelector(selectCocktailsStatus);
+  const query = useAppSelector(selectQuery);
+
+  const filteredCocktails = cocktails.filter((cocktail) =>
+    cocktail.name.toLowerCase().includes(query.toLowerCase())
+  );
 
   useEffect(() => {
     if (status === 'idle') dispatch(fetchCocktails());
@@ -39,11 +45,7 @@ export default function HomePage() {
             Cocktails
           </h3>
           <div className='flex-1 w-full'>
-            <Input
-              type='search'
-              placeholder='Search...'
-              className='w-full min-w-none'
-            />
+            <Search />
           </div>
         </div>
         {status === 'loading' || (status === 'idle' && <p>Loading...</p>)}
@@ -52,7 +54,7 @@ export default function HomePage() {
 
         {status === 'succeeded' && (
           <ul className='grid grid-cols-2 items-center md:grid-cols-4 lg:grid-cols-5'>
-            {cocktails.map((cocktail) => (
+            {filteredCocktails.map((cocktail) => (
               <li key={cocktail.id}>
                 <Link to={`/cocktails/${cocktail.id}`}>
                   <div className='relative'>
