@@ -8,12 +8,14 @@ import {
 import { Link } from 'react-router-dom';
 import Search from '../features/search/Search';
 import { selectQuery } from '../features/search/search-slice';
+import { useAuth0 } from '@auth0/auth0-react';
 
 export default function HomePage() {
   const dispatch = useAppDispatch();
   const cocktails = useAppSelector(selectCocktails);
   const status = useAppSelector(selectCocktailsStatus);
   const query = useAppSelector(selectQuery);
+  const { isAuthenticated, user } = useAuth0();
 
   const filteredCocktails = cocktails.filter((cocktail) =>
     cocktail.name.toLowerCase().includes(query.toLowerCase())
@@ -29,14 +31,17 @@ export default function HomePage() {
         <h2 className='text-3xl font-bold md:text-4xl lg:text-5xl'>
           Welcome to Caipirinha
         </h2>
-        <p className='text-lg'>Please sign in to save your favorite drinks!</p>
-      </div>
-
-      {/* Only show if user is logged in */}
-      <div>
-        <h3 className='text-2xl font-bold text-center my-8 hidden'>
-          Your Favorites
-        </h3>
+        {!isAuthenticated && (
+          <p className='text-lg'>
+            Please sign in to save your favorite drinks!
+          </p>
+        )}
+        {isAuthenticated && (
+          <p className='text-lg'>
+            Enojoy your favorite drinks,{' '}
+            <span className='text-primary'>{user?.given_name}!</span>
+          </p>
+        )}
       </div>
 
       <div>

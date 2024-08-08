@@ -14,6 +14,6 @@ https://caipirinha.vercel.app/
 - [x] Implement Redux to manage state.
 - [x] Scaffold basic UI with data from TheCocktailDB API.
 - [x] Implement Search bar.
-- [ ] Implement Auth0 for authentication.
+- [x] Implement Auth0 for authentication.
 - [ ] Add to favorites feature.
 - [ ] Dockerize the app.

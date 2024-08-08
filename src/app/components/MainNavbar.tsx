@@ -1,7 +1,6 @@
 import { Button, Navbar } from 'react-daisyui';
 import { Link } from 'react-router-dom';
 import LoginButton from '../../features/Auth/LoginButton';
-import LogoutButton from '../../features/Auth/LogoutButton';
 import UserProfile from '../../features/Auth/UserProfile';
 import { useAuth0 } from '@auth0/auth0-react';
 
@@ -22,12 +21,7 @@ export default function MainNavbar() {
         <Navbar.End>
           {!isAuthenticated && <LoginButton />}
 
-          {isAuthenticated && (
-            <>
-              <LogoutButton />
-              <UserProfile />
-            </>
-          )}
+          {isAuthenticated && <UserProfile />}
         </Navbar.End>
       </Navbar>
     </header>
