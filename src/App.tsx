@@ -1,13 +1,12 @@
 import { Outlet } from 'react-router-dom';
-import { Button } from 'react-daisyui';
+import Navbar from './app/components/MainNavbar';
 
 function App() {
   return (
-    <div>
-      <h1 className='text-3xl font-bold underline'>Hello Caipirinha</h1>
-      <Button color='primary'>Click me!</Button>
+    <>
+      <Navbar />
       <Outlet />
-    </div>
+    </>
   );
 }
 
