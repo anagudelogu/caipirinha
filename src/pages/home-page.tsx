@@ -38,7 +38,7 @@ export default function HomePage() {
         )}
         {isAuthenticated && (
           <p className='text-lg'>
-            Enojoy your favorite drinks,{' '}
+            Enjoy your favorite drinks,{' '}
             <span className='text-primary'>{user?.given_name}!</span>
           </p>
         )}
