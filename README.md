@@ -11,7 +11,7 @@ https://caipirinha.vercel.app/
 - [x] Deploy and sync with main branch.
 - [x] Add GitHub Actions to run linter checks.
 - [x] Install dependencies (React Router, Axios, TailwindCSS, etc)
-- [ ] Implement Redux to manage state.
+- [x] Implement Redux to manage state.
 - [ ] Scaffold basic UI with data from TheCocktailDB API.
 - [ ] Implement Search bar.
 - [ ] Implement Auth0 for authentication.
