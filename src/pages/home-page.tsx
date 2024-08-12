@@ -6,13 +6,12 @@ import {
   selectCocktailsStatus,
   selectIsFilteredByFavorites,
 } from '../features/cocktails/cocktails-slice';
-import { Link } from 'react-router-dom';
 import Search from '../features/search/Search';
 import { selectQuery } from '../features/search/search-slice';
 import { useAuth0 } from '@auth0/auth0-react';
 import { selectUser } from '../features/Auth/user-slice';
-import Favorite from '../app/components/Favorite';
 import FavoritesFilter from '../app/components/FavoritesFilter';
+import CocktailCard from '../features/cocktails/CocktailCard';
 
 export default function HomePage() {
   const dispatch = useAppDispatch();
@@ -66,7 +65,7 @@ export default function HomePage() {
             <h3 className='text-2xl font-bold text-base-content flex items-center gap-1 md:text-3xl'>
               Cocktails
             </h3>
-            <FavoritesFilter />
+            {isAuthenticated && <FavoritesFilter />}
           </div>
           <div className='flex-1 w-full'>
             <Search />
@@ -79,26 +78,13 @@ export default function HomePage() {
         {status === 'succeeded' && (
           <ul className='grid grid-cols-2 items-center md:grid-cols-4 lg:grid-cols-5'>
             {filteredCocktails.map((cocktail) => (
-              <li key={cocktail.id} className='relative'>
-                <Favorite
-                  id={cocktail.id}
-                  className='absolute top-0 right-0 z-10'
-                  isFavorite={cocktailIsFavorite(cocktail.id)}
-                />
-                <Link to={`/cocktails/${cocktail.id}`}>
-                  <div>
-                    <img
-                      src={cocktail.image}
-                      alt={cocktail.name}
-                      className='w-full h-auto'
-                    />
-                    <div className='absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-90'></div>
-                    <div className='absolute bottom-0 left-0 right-0 p-4 text-white z-10 lg:text-lg'>
-                      <p>{cocktail.name}</p>
-                    </div>
-                  </div>
-                </Link>
-              </li>
+              <CocktailCard
+                key={cocktail.id}
+                id={cocktail.id}
+                image={cocktail.image}
+                name={cocktail.name}
+                isFavorite={cocktailIsFavorite(cocktail.id)}
+              />
             ))}
           </ul>
         )}
