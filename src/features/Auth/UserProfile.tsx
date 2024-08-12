@@ -2,10 +2,13 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { useState } from 'react';
 import { Avatar, Button, Menu } from 'react-daisyui';
 import { clsx } from 'clsx';
+import { useAppSelector } from '../../app/hooks';
+import { selectUser } from './user-slice';
 
 export default function UserProfile() {
-  const { user, isAuthenticated, isLoading, logout } = useAuth0();
+  const { isAuthenticated, isLoading, logout } = useAuth0();
   const [menuVisible, setMenuVisible] = useState(false);
+  const user = useAppSelector(selectUser);
 
   function toggleMenu() {
     setMenuVisible(!menuVisible);
@@ -21,7 +24,9 @@ export default function UserProfile() {
       <div className='relative'>
         <Button color='ghost' onClick={toggleMenu} className='p-0'>
           <div className='text-right hidden md:block'>
-            <span className='text-base-content font-semibold'>{user.name}</span>
+            <span className='text-base-content font-semibold'>
+              {`${user.given_name} ${user.family_name}`}
+            </span>
             <span className='text-xs text-base-content-secondary block font-normal'>
               {user.email}
             </span>

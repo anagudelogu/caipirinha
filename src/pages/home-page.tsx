@@ -9,13 +9,16 @@ import { Link } from 'react-router-dom';
 import Search from '../features/search/Search';
 import { selectQuery } from '../features/search/search-slice';
 import { useAuth0 } from '@auth0/auth0-react';
+import { selectUser } from '../features/Auth/user-slice';
+import Favorite from '../app/components/Favorite';
 
 export default function HomePage() {
   const dispatch = useAppDispatch();
   const cocktails = useAppSelector(selectCocktails);
   const status = useAppSelector(selectCocktailsStatus);
   const query = useAppSelector(selectQuery);
-  const { isAuthenticated, user } = useAuth0();
+  const { isAuthenticated } = useAuth0();
+  const user = useAppSelector(selectUser);
 
   const filteredCocktails = cocktails.filter((cocktail) =>
     cocktail.name.toLowerCase().includes(query.toLowerCase())
@@ -24,6 +27,11 @@ export default function HomePage() {
   useEffect(() => {
     if (status === 'idle') dispatch(fetchCocktails());
   }, [dispatch, status]);
+
+  function cocktailIsFavorite(cocktailId: string) {
+    if (!user || !user.favoriteCocktails) return false;
+    return user.favoriteCocktails.includes(cocktailId);
+  }
 
   return (
     <>
@@ -36,10 +44,10 @@ export default function HomePage() {
             Please sign in to save your favorite drinks!
           </p>
         )}
-        {isAuthenticated && (
+        {isAuthenticated && user && (
           <p className='text-lg'>
             Enjoy your favorite drinks,{' '}
-            <span className='text-primary'>{user?.given_name}!</span>
+            <span className='text-primary'>{user.given_name}!</span>
           </p>
         )}
       </div>
@@ -60,9 +68,14 @@ export default function HomePage() {
         {status === 'succeeded' && (
           <ul className='grid grid-cols-2 items-center md:grid-cols-4 lg:grid-cols-5'>
             {filteredCocktails.map((cocktail) => (
-              <li key={cocktail.id}>
+              <li key={cocktail.id} className='relative'>
+                <Favorite
+                  id={cocktail.id}
+                  className='absolute top-0 right-0 z-10'
+                  isFavorite={cocktailIsFavorite(cocktail.id)}
+                />
                 <Link to={`/cocktails/${cocktail.id}`}>
-                  <div className='relative'>
+                  <div>
                     <img
                       src={cocktail.image}
                       alt={cocktail.name}
