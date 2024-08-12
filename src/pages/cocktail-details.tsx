@@ -8,6 +8,8 @@ import {
   selectCocktailDetailsStatus,
 } from '../features/cocktails/cocktails-slice';
 import { Badge, Breadcrumbs } from 'react-daisyui';
+import Favorite from '../app/components/Favorite';
+import { selectUser } from '../features/Auth/user-slice';
 
 export default function CocktailDetails() {
   const dispatch = useAppDispatch();
@@ -15,6 +17,7 @@ export default function CocktailDetails() {
   const id = params.id;
   const cocktail = useAppSelector(selectCocktailDetails);
   const status = useAppSelector(selectCocktailDetailsStatus);
+  const user = useAppSelector(selectUser);
 
   useEffect(() => {
     if (id) dispatch(fetchCocktailById(id));
@@ -49,9 +52,17 @@ export default function CocktailDetails() {
             </div>
 
             <div className='flex flex-col gap-2 mt-6 flex-1 md:mt-0'>
-              <Badge color='primary'>
-                {cocktail.alcoholic ? 'Alcoholic' : 'Non Alcoholic'}
-              </Badge>
+              <div className='flex justify-between items-center md:justify-start md:gap-2'>
+                <Badge color='primary'>
+                  {cocktail.alcoholic ? 'Alcoholic' : 'Non Alcoholic'}
+                </Badge>
+                <Favorite
+                  id={cocktail.id}
+                  isFavorite={
+                    user?.favoriteCocktails.includes(cocktail.id) ?? false
+                  }
+                />
+              </div>
               <h3 className='text-xl text-base-content font-semibold lg:text-2xl'>
                 Ingredients
               </h3>
