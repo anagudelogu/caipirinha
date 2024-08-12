@@ -15,5 +15,5 @@ https://caipirinha.vercel.app/
 - [x] Scaffold basic UI with data from TheCocktailDB API.
 - [x] Implement Search bar.
 - [x] Implement Auth0 for authentication.
-- [ ] Add to favorites feature.
+- [x] Add to favorites feature.
 - [ ] Dockerize the app.

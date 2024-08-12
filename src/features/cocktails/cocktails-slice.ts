@@ -14,6 +14,7 @@ export interface CocktailState {
   status: 'idle' | 'loading' | 'failed' | 'succeeded';
   cocktailDetails: DetailedDrink | null;
   detailsStatus: 'idle' | 'loading' | 'failed';
+  isFilteredByFavorites: boolean;
 }
 
 const initialState: CocktailState = {
@@ -21,6 +22,7 @@ const initialState: CocktailState = {
   status: 'idle',
   cocktailDetails: null,
   detailsStatus: 'idle',
+  isFilteredByFavorites: false,
 };
 
 export const fetchCocktails = createAsyncThunk(
@@ -55,6 +57,9 @@ export const cocktailsSlice = createSlice({
     clearCocktailDetails: (state) => {
       state.cocktailDetails = null;
     },
+    setIsFilteredByFavorites: (state, action) => {
+      state.isFilteredByFavorites = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -83,7 +88,8 @@ export const cocktailsSlice = createSlice({
 
 export default cocktailsSlice.reducer;
 
-export const { clearCocktailDetails } = cocktailsSlice.actions;
+export const { clearCocktailDetails, setIsFilteredByFavorites } =
+  cocktailsSlice.actions;
 
 export const selectCocktails = (state: { cocktails: CocktailState }) =>
   state.cocktails.value;
@@ -94,3 +100,6 @@ export const selectCocktailDetails = (state: { cocktails: CocktailState }) =>
 export const selectCocktailDetailsStatus = (state: {
   cocktails: CocktailState;
 }) => state.cocktails.detailsStatus;
+export const selectIsFilteredByFavorites = (state: {
+  cocktails: CocktailState;
+}) => state.cocktails.isFilteredByFavorites;
