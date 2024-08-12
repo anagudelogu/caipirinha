@@ -4,6 +4,7 @@ import {
   fetchCocktails,
   selectCocktails,
   selectCocktailsStatus,
+  selectIsFilteredByFavorites,
 } from '../features/cocktails/cocktails-slice';
 import { Link } from 'react-router-dom';
 import Search from '../features/search/Search';
@@ -11,6 +12,7 @@ import { selectQuery } from '../features/search/search-slice';
 import { useAuth0 } from '@auth0/auth0-react';
 import { selectUser } from '../features/Auth/user-slice';
 import Favorite from '../app/components/Favorite';
+import FavoritesFilter from '../app/components/FavoritesFilter';
 
 export default function HomePage() {
   const dispatch = useAppDispatch();
@@ -19,10 +21,16 @@ export default function HomePage() {
   const query = useAppSelector(selectQuery);
   const { isAuthenticated } = useAuth0();
   const user = useAppSelector(selectUser);
+  const isFilteredByFavorites = useAppSelector(selectIsFilteredByFavorites);
 
-  const filteredCocktails = cocktails.filter((cocktail) =>
-    cocktail.name.toLowerCase().includes(query.toLowerCase())
-  );
+  const filteredCocktails = cocktails
+    .filter((cocktail) =>
+      cocktail.name.toLowerCase().includes(query.toLowerCase())
+    )
+    .filter((cocktail) => {
+      if (!isFilteredByFavorites) return true;
+      return cocktailIsFavorite(cocktail.id);
+    });
 
   useEffect(() => {
     if (status === 'idle') dispatch(fetchCocktails());
@@ -54,9 +62,12 @@ export default function HomePage() {
 
       <div>
         <div className='flex items-center px-4 gap-2 mb-4 lg:mb-8'>
-          <h3 className='text-2xl font-bold text-base-content flex items-center gap-1 flex-1 w-full md:text-3xl'>
-            Cocktails
-          </h3>
+          <div className='flex-1 w-full flex items-center gap-1 lg:gap-3'>
+            <h3 className='text-2xl font-bold text-base-content flex items-center gap-1 md:text-3xl'>
+              Cocktails
+            </h3>
+            <FavoritesFilter />
+          </div>
           <div className='flex-1 w-full'>
             <Search />
           </div>
